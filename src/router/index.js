@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import Ping from '../components/Ping.vue';
 
 Vue.use(VueRouter);
 
@@ -18,6 +19,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
+  },
+  {
+    path: '/ping',
+    name: 'Ping',
+    component: Ping,
   }
 ];
 
@@ -28,3 +34,5 @@ const router = new VueRouter({
 });
 
 export default router;
+
+
