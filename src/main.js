@@ -2,12 +2,10 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-
-// Install BootstrapVue
-Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'jquery'
+import 'popper.js'
 
 Vue.config.productionTip = false;
 
@@ -19,12 +17,11 @@ new Vue({
 
 
 //* Runs Python File in environment shell
-var pyshell =  require('python-shell');
-pyshell.run('database.py',  function  (err, results)  {
- if(err){
-   console.log(err);
-   return;
-  }  
-  console.log(results)
 
-}); 
+var pyshell =  require('python-shell');
+
+pyshell.run('database.py',  function  (err, results)  {
+ if  (err)  throw err;
+ console.log('hello.py finished.');
+ console.log('results', results);
+});

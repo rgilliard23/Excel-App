@@ -82,11 +82,11 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), unique = True)
     description = db.Column(db.String(200))
-    price = db.Column(db.Float, unique = False)
+    price = db.Column(db.Numeric(10,2), unique = False)
     
-    def __init__(self, name):
+    def __init__(self, name, description):
         self.name = name
-
+        self.description = description
 
 
 #* API methods ###################
@@ -156,7 +156,7 @@ def update_Customer(id):
   return jsonify({'customer': 'Updated'})
 
 
-#* Delete Product
+#* Delete Customer
 @app.route('/customer/<id>', methods=['DELETE'])
 def delete_customer(id):
   customer = Customer.query.get(id)
@@ -165,7 +165,89 @@ def delete_customer(id):
 
   return jsonify({'message': 'Deleted Customer'})
 
+#* Products ************************
+
+#* Create Product
+@app.route('/product', methods=['POST'])
+def add_Product():
+  name = request.json['name']
+  description = request.json['description']
+
+  product = Product(name, description)
+  db.session.add(product)
+  db.session.commit()
+
+  return jsonify({'product': 'New Product Created'})
+
+
+
+
+#* Get All Products
+@app.route('/product', methods=['GET'])
+def get_Products():
+  products = Product.query.all()
+  output = []
+
+  for product in products:
+      product_data = {}
+      product_data['id'] = product.id
+      product_data['name'] = product.name
+      product_data['description'] = product.description
+      product_data['price'] = product.price
+      output.append(product_data)
+    
+  return jsonify({'products' : output})
+
+  #* Get Product
+@app.route('/product/<id>', methods=['GET'])
+def get_Product(id):
+  product = Product.query.get(id)
+
+  product_data ={}
+
+  product_data['id'] = product.id
+  product_data['name'] = product.name
+  product_data['description'] = product.description
+  product_data['price'] = product.price
+
+  return jsonify({'customer':  product_data})
+
+
+#* Update a Product
+@app.route('/product/<id>', methods=['PUT'])
+def update_Product(id):
+  product = Product.query.get(id)
+
+  name = request.json['name']
+  description = request.json['description']
+
+  product.name = name
+  product.description = description
+  
+  product_data ={}
+  product_data['id'] = product.id
+  product_data['name'] = product.name
+  product_data['price'] = product.address
+
+  db.session.commit()
+
+  return jsonify({'customer': 'Updated'})
+
+
+#* Delete Product
+@app.route('/product/<id>', methods=['DELETE'])
+def delete_Product(id):
+  product = Product.query.get(id)
+  db.session.delete(product)
+  db.session.commit()
+
+  return jsonify({'message': 'Deleted Customer'})
+
+
+
+
+
+#*END OF API****************
   #* Run Server
 if __name__ == '__main__':
   app.run(debug=True)
-

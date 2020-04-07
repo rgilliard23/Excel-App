@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1 id="example">{{ hello }}</h1>
-     <b-table fixed striped hover :items="data" :fields="fields"></b-table>
     <table class="table table-striped table-hover" style="width:100%">
       <thead>
         <tr>
@@ -70,8 +69,6 @@ export default {
   },
   data: function() {
     return {
-      fields: [
-        'name', 'address', 'id'],
       data: [],
       hello: "Hello World!",
     };

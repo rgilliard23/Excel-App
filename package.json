@@ -15,8 +15,9 @@
   "dependencies": {
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
-    "bootstrap-vue": "^2.10.1",
+    "bootstrap-input-spinner": "^1.13.4",
     "core-js": "^3.6.4",
+    "jquery": "^3.4.1",
     "popper.js": "^1.16.1",
     "python-shell": "^1.0.8",
     "vue": "^2.6.11",
