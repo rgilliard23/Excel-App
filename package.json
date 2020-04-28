@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "extraResources": "src/data",
     "lint": "vue-cli-service lint",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
@@ -21,6 +22,7 @@
     "popper.js": "^1.16.1",
     "python-shell": "^1.0.8",
     "vue": "^2.6.11",
+    "vue-json-excel": "^0.2.98",
     "vue-router": "^3.1.5",
     "vuex": "^3.1.2"
   },
@@ -33,6 +35,7 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.0.3",
     "electron": "^6.0.0",
+    "electron-packager": "^14.2.1",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^6.1.2",

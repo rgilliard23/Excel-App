@@ -1,114 +1,100 @@
 <template>
-  <div style="width: 100%;">
+  <div style="width: 100%;" id="Dashboard">
     <div class="row">
-      <h1 class="Title">Dashboard</h1>
-      <div>
-        <!-- Button trigger modal -->
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-toggle="modal"
-          data-target="#exampleModalCenter"
-        >
-          Launch demo modal
-        </button>
-
-        <!-- Modal -->
-        <div
-          class="modal fade"
-          id="exampleModalCenter"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalCenterTitle"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">
-                  Add New Product
-                </h5>
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form>
-                  <div class="row">
-                    <div class="col">
-                      <div class="form-group">
-                        <label for="productName">Product Name</label>
-                        <input
-                          v-model ="productName"
-                          id="productName"
-                          class="form-control"
-                          type="text"
-                          placeholder="Default input"
-                        />
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Price</label>
-                        <input v-model ="productPrice" class="form-control" type="number" step="0.10" />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea
-                      v-model = "productDescription"
-                      class="form-control"
-                      id="description"
-                      rows="3"
-                      maxlength = "200"
-                    ></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- Sidebar -->
+      <div class="col-2 sidebar">
+        <h2>Dashboard</h2>
+        <ul v-for="tab in tabs" v-bind:key="tab">
+          <li v-on:click="currentTab = tab">{{ tab }}</li>
+        </ul>
+      </div>
+      <!-- Main Content -->
+      <div class="col-9">
+        <keep-alive include="Products,Customer">
+        <component v-bind:is="currentTabComponent"></component
+        ></keep-alive>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Customer from "@/components/Customer.vue";
+import Invoice from "@/components/Invoice.vue";
+import Products from "@/views/Products.vue";
+
+const axios = require("axios");
+const path = "http://127.0.0.1:5000/product";
 export default {
   name: "Dashboard",
+  components: {
+    Customer,
+    Products,
+    Invoice
+  },
   data: function() {
     return {
-    productName: '',
-    productPrice: '',
-    productDescription: ''
+      // showCustomers: true,
+      // showProducts: true,
+      currentTab: "Customer",
+      tabs: ["Customer", "Products", "Invoice"],
+      product: {
+        name: "",
+        price: 0,
+        description: ""
+      }
+    };
+  },
+  created() {
+    this.currentTabComponent();
+  },
+  computed: {
+    currentTabComponent: function() {
+      return this.currentTab;
     }
-    
+  },
+  methods: {
+    submitProduct() {
+      axios
+        .post(path, this.product)
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
+      console.log("Submitted Product");
+    }
+    // shopComponents(num){
+    //     switch(num){
+    //       case 1:
+    //         showProducts: true;
+    //         showCustomers: false;
+    //         break;
+    //       case 2:
+    //         showCustomers: true;
+    //         showProducts: false;
+    //     }
+    // }
   }
 };
 </script>
 
-<style>
+<style scoped>
 * {
   padding: 0;
   margin: 0;
 }
+
 .Title {
   display: flex;
 }
 .addProduct {
   display: flex;
 }
-.row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 100%;
+.sidebar {
+  height: 100vh;
+  background-color: #42b983;
+  font-size: 12px;
 }
 </style>

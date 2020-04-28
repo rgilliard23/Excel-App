@@ -1,21 +1,24 @@
 <template>
   <div class="home">
     <Dashboard/>
-    <Table v-bind:todos="todos" v-on:del-todo="deleteTodo" />
+    <!-- <Table v-bind:todos="todos" v-on:del-todo="deleteTodo" />
+    <Products/> -->
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Table from "@/components/Table.vue";
+// import Table from "@/components/Table.vue";
 import Dashboard from "@/components/Dashboard.vue";
+// import Products from "@/views/Products.vue";
 
 
 export default {
   name: "Home",
   components: {
-    Table,
-    Dashboard
+    // Table,
+    Dashboard,
+    // Products
   },
   data: function() {
     return {
@@ -35,6 +38,9 @@ export default {
 </script>
 
 <style scoped>
-
+* {
+  padding: 0;
+  margin: 0;
+}
 </style>
 
